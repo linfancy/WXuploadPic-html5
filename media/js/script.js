@@ -61,15 +61,12 @@ var Weixin = {
             width = $('.pinch-zoom-container').width(),
             height = $('.pinch-zoom-container').height(),
             image_target = $("#js-image").get(0),
-            image_src = $("#js-image").attr("src"),
             targetWidth = $("#js-image").width(),
             targetHeight = $("#js-image").height(),
-            img = new Image(),
             left = ($('.pinch-zoom-container').offset().left - $("#js-image").offset().left)>0?($('.pinch-zoom-container').offset().left - $("#js-image").offset().left):0,
             top = ($('.pinch-zoom-container').offset().top - $("#js-image").offset().top)?($('.pinch-zoom-container').offset().top - $("#js-image").offset().top):0;
-            img.src = image_src,
-            imgWidth = img.width,
-            imgHeight = img.height;
+            imgWidth = image_target.naturalWidth,
+            imgHeight = image_target.naturalHeight;
 
         crop_canvas = $("#canvas")[0];
         crop_canvas.width = width;
@@ -78,10 +75,18 @@ var Weixin = {
         	y = top/targetHeight*imgHeight,
         	w = width/targetWidth*imgWidth,
         	h = height/targetHeight*imgHeight;
-        console.log(img.width);
-        console.log(image_target);
-        console.log(x+" "+y+" "+w+" "+h+" "+targetWidth+" "+targetHeight+" "+left+" "+top+" "+width+" "+height);
         crop_canvas.getContext('2d').drawImage(image_target,x,y,w,h,0,0,width,height);
+        var imgdata = crop_canvas.toDataURL();
+        imgdata = imgdata.split(',')[1];
+        imgdata = window.atob(imgdata);
+        var ia = new Uint8Array(imgdata.length);
+		for (var i = 0; i < imgdata.length; i++) {
+		    ia[i] = imgdata.charCodeAt(i);
+		};
+
+		// canvas.toDataURL 返回的默认格式就是 image/png
+		var blob=new Blob([ia], {type:"image/png"});
+        
 	}
 }
 Weixin.init();
