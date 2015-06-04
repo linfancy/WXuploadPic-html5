@@ -70,6 +70,7 @@
                 minZoom: 0.5,
                 lockDragAxis: false,
                 use2d: true,
+                parentWrapperHeight : 300,
                 zoomStartEventName: 'pz_zoomstart',
                 zoomEndEventName: 'pz_zoomend',
                 dragStartEventName: 'pz_dragstart',
@@ -128,6 +129,7 @@
             handleZoom: function (event, newScale) {
 
                 // a relative scale factor is used
+                // Returns the touches of an event relative to the container offset
                 var touchCenter = this.getTouchCenter(this.getTouches(event)),
                     scale = newScale / this.lastScale;
                 this.lastScale = newScale;
@@ -152,11 +154,12 @@
              * @param event
              */
             handleDoubleTap: function (event) {
-                var center = this.getTouches(event)[0],
+                var center = this.getTouches(event)[0],// 照片相对于container 中点的位置
                     zoomFactor = this.zoomFactor > 1 ? 1 : this.options.tapZoomFactor,
                     startZoomFactor = this.zoomFactor,
                     updateProgress = (function (progress) {
-                        this.scaleTo(startZoomFactor + progress * (zoomFactor - startZoomFactor), center);
+                      console.log(progress);
+                      this.scaleTo(startZoomFactor + progress * (zoomFactor - startZoomFactor), center);
                     }).bind(this);
 
                 if (this.hasInteraction) {
@@ -368,6 +371,7 @@
 
             /**
              * Calculates the initial zoom factor (for the element to fit into the container)
+             * container宽度除以照片宽度得到缩放比
              * @return the initial zoom factor
              */
             getInitialZoomFactor: function () {
@@ -419,7 +423,7 @@
 
             canDrag: function () {
                 //return !isCloseTo(this.zoomFactor, 1);
-		return true;
+		        return true;
             },
 
             /**
@@ -498,7 +502,7 @@
             },
 
             setContainerY: function (y) {
-                return this.container.height(300);
+                return this.container.height(this.options.parentWrapperHeight);
             },
 
             /**
@@ -543,6 +547,7 @@
 
             /**
              * Updates the css values according to the current zoom factor and offset
+             * 更新css值 包括放大缩小还有位置
              */
             update: function () {
 
@@ -621,9 +626,9 @@
             }
         };
 
-        var detectGestures = function (el, target) {
-            var interaction = null,
-                fingers = 0,
+        var detectGestures = function (el, target) {//传了 container.get(0), this 进来
+            var interaction = null,//动作 drag 还是 zoom
+                fingers = 0, //手指个数
                 lastTouchStart = null,
                 startTouches = null,
 
@@ -662,7 +667,7 @@
                         setInteraction(null, event);
                     }
                 },
-
+                //获取每个触点的位置
                 targetTouches = function (touches) {
                     return Array.prototype.slice.call(touches).map(function (touch) {
                         return {
@@ -769,6 +774,6 @@
         });
     } else {
         window.RTP = window.RTP || {};
-        window.RTP.PinchZoom = definePinchZoom(window.$);
+        window.RTP.PinchZoom = definePinchZoom($);
     }
 }).call(this);

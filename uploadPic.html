@@ -7,14 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   </head>
   <body>
-    <button id="js-choose-image">选择照片</button>
-      <div class="page">
-        <div class="image-wrapper"><img src="" id="js-image"></div>
+    <div class="index">
+      <div class="upload-pic">
+        <div class="page">
+          <div class="image-wrapper"><img src="" id="js-image"></div>
+        </div>
+        <button class="icon-paizhao" id="js-choose-image"><!-- 选择照片 --></button>
+        <canvas class="page-canvas" id="canvas"></canvas>
       </div>
+      <footer class="footer">
+        <button class="btn-back"><!-- 返回 --></button>  
+        <button class="btn-ok"  id="js-cropImg"><!-- OK --></button>
+      </footer>
+    </div>
     
-    <canvas id="canvas"></canvas>
-    <button id="js-cropImg">裁剪</button>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="media/js/rem.js"></script>
     <script type="text/javascript" src="media/js/zepto.1.1.6.js"></script>
     <script type="text/javascript" src="media/js/pinchzoom.js"></script>
     <script type="text/javascript" src="media/js/script.js"></script>

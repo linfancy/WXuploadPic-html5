@@ -2,15 +2,8 @@
 
 $uploaddir = "../upload/";
 $type = array("jpg", "gif", "bmp", "jpeg", "png");
-
-/**
- * [获取文件后缀名]
- * @param  [string] $filename [文件名]
- * @return [string] fileext [文件后缀名]
- */
-function fileext($filename){
-	return substr(strrchr($filename, '.'), 1);
-}
+$result['status'] = 0;
+$result['info'] = "success";
 
 /**
  * [生成随机文件名函数]
@@ -38,11 +31,15 @@ if(!empty($_POST)){
 			$uploadfile = $uploaddir.$filename;
 		}while (file_exists($uploadfile));
 		if(!file_put_contents($uploadfile, $tmp)){
-			echo "上传图片失败";
+			$result['status'] = 1;
+			$result['info'] = '图片上传失败';
 		}
 	}else{
-		echo "没有图片";
+		$result['status'] = 1;
+		$result['info'] = '图片上传失败';
 	}
 }else{
-	echo "fail";
+	$result['status'] = 1;
+	$result['info'] = '图片上传失败';
 }
+echo json_encode($result, true);

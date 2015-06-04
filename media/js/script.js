@@ -47,7 +47,8 @@ var Weixin = {
 	},
 	pinchImg : function(){
 		$('div.image-wrapper').each(function () {
-            new RTP.PinchZoom($(this), {});
+			console.log($(this).parent().height());
+            new RTP.PinchZoom($(this), {'parentWrapperHeight':$(this).parent().height()});
         });
 	},
 	bindCropImg : function(){
@@ -78,23 +79,19 @@ var Weixin = {
         crop_canvas.getContext('2d').drawImage(image_target,x,y,w,h,0,0,width,height);
         var imgdata = crop_canvas.toDataURL();
         imgdata = imgdata.split(',')[1];
-        console.log(imgdata);
-  //       imgdata = window.atob(imgdata);
-  //       var ia = new Uint8Array(imgdata.length);
-		// for (var i = 0; i < imgdata.length; i++) {
-		//     ia[i] = imgdata.charCodeAt(i);
-		// };
-		// var blob=new Blob([ia], {type:"image/png"});
-		// var fd = new FormData();
-		// fd.append('file', blob);
 		$.ajax({
 			url : "php/upload.php",
 			type : "POST",
 			data : {
 				'imgdata' : imgdata,
 			},
-			success : function(){
-
+			dataType : 'json',
+			success : function(data){
+				if(data.status){
+					console.log(data.info);
+				}else{
+					console.log(data.info);
+				}
 			}
 		})
 	}
