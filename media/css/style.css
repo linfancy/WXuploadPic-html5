@@ -64,30 +64,46 @@ a,a:visited{text-decoration:none;-webkit-touch-callout:none;}
 	width: 100%;
 }
 
+.add-pic .page-canvas, .zoom-pic .page-canvas{
+	display: none;
+}
+.add-pic .page, .zoom-pic .page-canvas{
+	display: block;
+}
+.zoom-pic .icon-paizhao{
+	display: none;
+}
+.show-pic .page-canvas{
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1000;
+}
+.show-pic .page, .show-pic .icon-paizhao{
+	display: none;
+}
 .footer{
 	width: 100%;
 	height: 50px;
 	position: fixed;
 	bottom: 0;
 	background: #333;
-	display: -webkit-box;  /* 老版本语法: Safari,  iOS, Android browser, older WebKit browsers.  */
-	display: -moz-box;    /* 老版本语法: Firefox (buggy) */ 
-	display: -ms-flexbox;  /* 混合版本语法: IE 10 */
-	display: -webkit-flex;  /* 新版本语法： Chrome 21+ */
-	display: flex;       /* 新版本语法： Opera 12.1, Firefox 22+ */
 }
 .footer button{
-	flex : 1;
+	display: block;
+	width: 50%;
 	height: 100%;
 	background: #333;
+	float: left;
 }
 .footer .btn-back{
 	background: #333 url(../img/icon-back.png) center center no-repeat;
 	background-size: 20px 20px;
 	border-right: 1px solid #000;
+	margin-left: -1px;
 }
 .footer .btn-ok{
 	background: #333 url(../img/icon-ok.png) center center no-repeat;
 	background-size: 20px 20px;
-	border-right: 1px solid #000;
 }

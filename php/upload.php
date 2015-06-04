@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 $uploaddir = "../upload/";
 $type = array("jpg", "gif", "bmp", "jpeg", "png");
 $result['status'] = 0;
@@ -30,10 +30,17 @@ if(!empty($_POST)){
 			$filename.=".png";
 			$uploadfile = $uploaddir.$filename;
 		}while (file_exists($uploadfile));
-		if(!file_put_contents($uploadfile, $tmp)){
+		try{
+			$status = file_put_contents($uploadfile, $tmp);
+		}catch(Exception $e){
+			echo json_encode($result, true);
+			exit();
+		}
+		if(!$status){
 			$result['status'] = 1;
 			$result['info'] = '图片上传失败';
 		}
+		
 	}else{
 		$result['status'] = 1;
 		$result['info'] = '图片上传失败';

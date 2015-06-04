@@ -1,15 +1,26 @@
 var Weixin = {
+	picWrapper : null,
 	init : function(){
 		$("#js-image").attr('src', 'media/img/1.jpg');
+		this.picWrapper = $('#js-upload-pic');
 		this.wxconfig();
 		this.pinchImg();
 		this.bindEvent();
 	},
 	bindEvent : function(){
 		this.bindCropImg();
+		this.bindBack();
+	},
+	bindBack : function(){
+		var _this = this,
+			btnBack = $("#js-btn-back");
+		btnBack.click(function(){
+			_this.picWrapper.removeClass("show-pic").removeClass("zoom-pic");
+		});
 	},
 	wxconfig : function(){
-		var wxdata = null;
+		var wxdata = null,
+			_this = this;
 		$.ajax({
 			type : 'GET',
 			url : 'php/getWeixin.php',
@@ -33,6 +44,7 @@ var Weixin = {
 						    success: function (res) {
 						        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 						        $("#js-image").attr('src',localIds[0]);
+						        _this.picWrapper.addClass('zoom-pic');
 						    }
 						});
 					})
@@ -53,12 +65,14 @@ var Weixin = {
 	},
 	bindCropImg : function(){
 		var _this = this;
+		_this.picWrapper.addClass("show-pic");
 		$("#js-cropImg").click(function(){
 			_this.cropImg();
 		});
 	},
 	cropImg : function(){
 		var crop_canvas,
+			_this = this,
             width = $('.pinch-zoom-container').width(),
             height = $('.pinch-zoom-container').height(),
             image_target = $("#js-image").get(0),
