@@ -38,6 +38,18 @@ a,a:visited{text-decoration:none;-webkit-touch-callout:none;}
 	position: relative;
 	background: #fff;
 }
+.upload-pic .paizhao-shade{
+	width: 100%;
+	height: 100%;
+	transform:translateY(-100%);
+	-webkit-transform:translateY(-100%);
+	background: rgba(255,255,255,0.8);
+}
+.upload-pic .paizhao-text{
+	font-size: 15px;
+	text-align: center;
+	line-height: 10rem;
+}
 .upload-pic .icon-paizhao{
 	background: #333 url(../img/icon-paizhao.png) center center no-repeat;
 	background-size: 30px 25px;
@@ -64,24 +76,27 @@ a,a:visited{text-decoration:none;-webkit-touch-callout:none;}
 	width: 100%;
 }
 
+
+
 .add-pic .page-canvas, .zoom-pic .page-canvas{
 	display: none;
 }
-.add-pic .page, .zoom-pic .page-canvas{
+.add-pic .page {
 	display: block;
 }
-.zoom-pic .icon-paizhao{
+.zoom-pic .paizhao-shade,.zoom-pic .page-canvas{
 	display: none;
 }
 .show-pic .page-canvas{
 	display: block;
 	position: absolute;
+	border: 1px solid #000;
 	left: 0;
 	top: 0;
 	z-index: 1000;
 }
-.show-pic .page, .show-pic .icon-paizhao{
-	display: none;
+.show-pic .page, .show-pic .paizhao-shade{
+	visibility: hidden;
 }
 .footer{
 	width: 100%;
